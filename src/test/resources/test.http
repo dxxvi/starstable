@@ -2,22 +2,75 @@ POST http://localhost:8080/download-data
 Content-Type: application/json
 
 {
-  "intervalDropdown": {
-    "loc": { "x": , "y": },
-    "loc1m": { "x": , "y": },
-    "loc2m": { "x": , "y": },
-    "loc3m": { "x": , "y": },
-    "loc5m": { "x": , "y": },
-    "loc10m": { "x": , "y": },
-    "loc15m": { "x": , "y": },
-    "loc30m": { "x": , "y": },
-    "loc45m": { "x": , "y": },
-    "loc1h": { "x": , "y": },
-    "loc2h": { "x": , "y": },
-    "loc3h": { "x": , "y": },
-    "loc4h": { "x": , "y": },
-    "loc12h": { "x": , "y": },
-    "loc1d": { "x": , "y": },
-    "loc4d": { "x": , "y": }
+  "intervalDropdowns": [
+    {
+      "downArrow": { "x": -3572, "y": -261 },
+      "menuItem": { "x": -3558, "y": 9 }
+    },
+    {
+      "downArrow": { "x": -3544 , "y": -261 },
+      "menuItem": { "x": 3520, "y": 41 }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    },
+    {
+      "downArrow": { "x": , "y": },
+      "menuItem": { "x": , "y": }
+    }
+  ],
+  "scrollScreen": {
+    "clickAt": { "x": -3777, "y": 326 },
+    "scrollTo": { "x": -2515, "y": 326 }
+  },
+  "exportDropdown": {
+    "clickAt": { "x": -2171, "y": -260 },
+    "exportChartData": { "x": -2110 , "y": -58 },
+    "exportButton": { "x": -2749 , "y": 339 }
   }
 }

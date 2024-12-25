@@ -1,7 +1,6 @@
 package home;
 
 import java.awt.MouseInfo;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,12 +44,12 @@ public class TradingViewApplication {
   }
 
   @PostMapping(path = "/download-data", produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<String> downloadData(@RequestBody Action action) {
+  public ResponseEntity<String> downloadData(@RequestBody DownloadDataAction action) {
     if (!running.compareAndSet(false /*expected*/, true /*new value*/)) {
-      return ResponseEntity.badRequest().body("Another action is running");
+      return ResponseEntity.badRequest().body("Another downloading is running");
     }
 
-    Thread.ofVirtual().start(new ActionRunner(List.of(action)));
-    return ResponseEntity.ok("Actions are being run.");
+    Thread.ofVirtual().start(new DownloadDataActionRunner(action));
+    return ResponseEntity.ok("Downloading is happening.");
   }
 }
