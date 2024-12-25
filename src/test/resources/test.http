@@ -1,0 +1,23 @@
+POST http://localhost:8080/download-data
+Content-Type: application/json
+
+{
+  "intervalDropdown": {
+    "loc": { "x": , "y": },
+    "loc1m": { "x": , "y": },
+    "loc2m": { "x": , "y": },
+    "loc3m": { "x": , "y": },
+    "loc5m": { "x": , "y": },
+    "loc10m": { "x": , "y": },
+    "loc15m": { "x": , "y": },
+    "loc30m": { "x": , "y": },
+    "loc45m": { "x": , "y": },
+    "loc1h": { "x": , "y": },
+    "loc2h": { "x": , "y": },
+    "loc3h": { "x": , "y": },
+    "loc4h": { "x": , "y": },
+    "loc12h": { "x": , "y": },
+    "loc1d": { "x": , "y": },
+    "loc4d": { "x": , "y": }
+  }
+}

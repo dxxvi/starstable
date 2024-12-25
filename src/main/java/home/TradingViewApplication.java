@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @SpringBootApplication
-public class StarstableApplication {
+public class TradingViewApplication {
   public static AtomicBoolean running = new AtomicBoolean(false);
 
-  private static final Logger log = LoggerFactory.getLogger(StarstableApplication.class);
+  private static final Logger log = LoggerFactory.getLogger(TradingViewApplication.class);
 
   public static void main(String[] args) throws Exception {
     Thread.ofVirtual()
@@ -34,23 +34,23 @@ public class StarstableApplication {
                     y = point.y;
                     System.out.printf("X: %d, Y: %d%n", x, y);
                   }
-                  Thread.sleep(200);
+                  Thread.sleep(100);
                 } catch (Exception e) {
                   log.warn(e.getMessage());
                 }
               }
             });
 
-    SpringApplication.run(StarstableApplication.class, args);
+    SpringApplication.run(TradingViewApplication.class, args);
   }
 
-  @PostMapping(path = "/run", produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<String> run(@RequestBody List<Action> actions) {
+  @PostMapping(path = "/download-data", produces = MediaType.TEXT_PLAIN_VALUE)
+  public ResponseEntity<String> downloadData(@RequestBody Action action) {
     if (!running.compareAndSet(false /*expected*/, true /*new value*/)) {
       return ResponseEntity.badRequest().body("Another action is running");
     }
 
-    Thread.ofVirtual().start(new ActionRunner(actions));
+    Thread.ofVirtual().start(new ActionRunner(List.of(action)));
     return ResponseEntity.ok("Actions are being run.");
   }
 }

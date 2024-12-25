@@ -25,7 +25,7 @@ public class ActionRunner implements Runnable {
     } catch (Exception e) {
       log.error("Run: {}", e.getMessage());
     } finally {
-      StarstableApplication.running.set(false);
+      TradingViewApplication.running.set(false);
     }
   }
 
