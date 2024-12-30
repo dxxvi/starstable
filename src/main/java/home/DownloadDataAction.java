@@ -3,6 +3,7 @@ package home;
 import java.util.List;
 
 public record DownloadDataAction(
+    Location activatePoint,
     List<IntervalDropdown> intervalDropdowns,
     ScrollScreen scrollScreen,
     ExportDropdown exportDropdown) {

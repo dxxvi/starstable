@@ -19,6 +19,7 @@ public class DownloadDataActionRunner implements Runnable {
   public void run() {
     try {
       var robot = new Robot();
+      gotoThenClick(action.activatePoint(), robot, 1000);
 
       for (var intervalDropDown : action.intervalDropdowns()) {
         gotoThenClick(intervalDropDown.downArrow(), robot, 1000);
@@ -57,10 +58,6 @@ public class DownloadDataActionRunner implements Runnable {
 
     robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     robot.delay(1000);
-  }
-
-  private void gotoThenClick(Location loc, Robot robot) throws Exception {
-    gotoThenClick(loc, robot, 2000);
   }
 
   private void gotoThenClick(Location loc, Robot robot, long msSleep) throws Exception {
