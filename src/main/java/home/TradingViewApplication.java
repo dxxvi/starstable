@@ -21,7 +21,7 @@ public class TradingViewApplication {
 
   public static void main(String[] args) throws Exception {
     Thread.ofVirtual()
-        .start(
+        .unstarted(
             () -> {
               int x = 0;
               int y = 0;

@@ -24,7 +24,7 @@ public class DownloadDataActionRunner implements Runnable {
       for (var intervalDropDown : action.intervalDropdowns()) {
         gotoThenClick(intervalDropDown.downArrow(), robot, 1000);
         gotoThenClick(intervalDropDown.menuItem(), robot, 2000);
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < intervalDropDown.scrollTimes(); i++) {
           gotoThenMousePressThenMoveThenRelease(
               action.scrollScreen().clickAt(), action.scrollScreen().scrollTo(), robot);
         }

@@ -9,7 +9,7 @@ public record DownloadDataAction(
     ExportDropdown exportDropdown) {
   public record Location(int x, int y) {}
 
-  public record IntervalDropdown(Location downArrow, Location menuItem) {}
+  public record IntervalDropdown(Location downArrow, Location menuItem, int scrollTimes) {}
 
   public record ScrollScreen(Location clickAt, Location scrollTo) {}
 
