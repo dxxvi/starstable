@@ -1,27 +1,34 @@
 package home;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.TextNode;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ActionRunner implements Runnable {
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final Logger log = LoggerFactory.getLogger(ActionRunner.class);
 
   private final List<Action> actions;
+  private final Robot robot;
 
-  public ActionRunner(List<Action> actions) {
+  public ActionRunner(List<Action> actions, Robot robot) {
     this.actions = actions;
+    this.robot = robot;
   }
 
   @Override
   public void run() {
     try {
-      var robot = new Robot();
-      actions.forEach(action -> doSingleAction(action, robot));
-
+      Map<String, Action> name2action = new HashMap<>();
+      actions.forEach(action -> doSingleAction(action, name2action));
     } catch (Exception e) {
       log.error("Run: {}", e.getMessage());
     } finally {
@@ -29,7 +36,11 @@ public class ActionRunner implements Runnable {
     }
   }
 
-  private void doSingleAction(Action action, Robot robot) {
+  private void doSingleAction(Action action, Map<String, Action> name2action) {
+    if (action.declaredActions() != null) {
+      name2action.putAll(action.declaredActions());
+    }
+
     try {
       if (action.movetoX() != null && action.movetoY() != null) {
         robot.mouseMove(action.movetoX(), action.movetoY());
@@ -58,7 +69,28 @@ public class ActionRunner implements Runnable {
       if (action.subactions() != null) {
         int repeatTimes = action.repeattimes() == null ? 1 : action.repeattimes();
         for (int i = 0; i < repeatTimes; i++) {
-          action.subactions().forEach(subaction -> doSingleAction(subaction, robot));
+          action
+              .subactions()
+              .forEach(
+                  jsonNode -> {
+                    if (jsonNode instanceof TextNode textNode) {
+                      var subaction = name2action.get(textNode.asText());
+                      if (subaction == null) {
+                        log.warn(
+                            "{} is not the name of any action. This name is ignored",
+                            textNode.asText());
+                      } else {
+                        doSingleAction(subaction, name2action);
+                      }
+                    } else { // this jsonNode must be an action
+                      try {
+                        doSingleAction(
+                            OBJECT_MAPPER.treeToValue(jsonNode, Action.class), name2action);
+                      } catch (JsonProcessingException jpex) {
+                        log.error("need to debug", jpex);
+                      }
+                    }
+                  });
         }
       }
     } catch (Exception e) {

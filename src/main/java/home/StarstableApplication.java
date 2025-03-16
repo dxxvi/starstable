@@ -1,6 +1,8 @@
 package home;
 
+import java.awt.AWTException;
 import java.awt.MouseInfo;
+import java.awt.Robot;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
@@ -26,7 +28,7 @@ public class StarstableApplication {
             () -> {
               int x = 0;
               int y = 0;
-              while (true) {
+              while (x < Integer.MAX_VALUE) {
                 try {
                   var point = MouseInfo.getPointerInfo().getLocation();
                   if (point.x != x || point.y != y) {
@@ -45,12 +47,12 @@ public class StarstableApplication {
   }
 
   @PostMapping(path = "/run", produces = MediaType.TEXT_PLAIN_VALUE)
-  public ResponseEntity<String> run(@RequestBody List<Action> actions) {
+  public ResponseEntity<String> run(@RequestBody List<Action> actions) throws AWTException {
     if (!running.compareAndSet(false /*expected*/, true /*new value*/)) {
       return ResponseEntity.badRequest().body("Another action is running");
     }
 
-    Thread.ofVirtual().start(new ActionRunner(actions));
+    Thread.ofVirtual().start(new ActionRunner(actions, new Robot()));
     return ResponseEntity.ok("Actions are being run.");
   }
 }
