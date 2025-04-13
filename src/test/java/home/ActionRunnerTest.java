@@ -1,5 +1,6 @@
 package home;
 
+import static java.nio.file.StandardOpenOption.*;
 import static java.util.Map.entry;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,6 +10,10 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -117,5 +122,50 @@ class ActionRunnerTest {
                     2)),
             robot)
         .run();
+  }
+
+//  @Test
+  void test() throws Throwable {
+    long fileSize = -1;
+
+    while (true) {
+      var file = new File("/dev/shm/h1.png");
+
+      if (!file.exists()) {
+        Thread.sleep(1_500);
+        continue;
+      }
+
+      if (file.length() == fileSize) {
+        Thread.sleep(1_500);
+        continue;
+      }
+
+      fileSize = file.length();
+      var processBuilder = new ProcessBuilder("tesseract", "h1.png", "h1", "-l", "eng");
+      processBuilder.directory(new File("/dev/shm"));
+      int exitCode = processBuilder.start().waitFor();
+      if (exitCode != 0) {
+        System.out.println("\n\n\nTesseract failed\n\n\n");
+        Thread.sleep(1_100);
+        continue;
+      }
+
+      file = new File("/dev/shm/h1.txt");
+      if (file.exists()) {
+        String everything = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+        everything = everything
+            .replaceAll("\\r\\n", "\n")
+            .replaceAll("\\n+", "\n")
+            .replaceAll("\\n. ", "\n- ");
+        Files.write(file.toPath(), everything.getBytes(StandardCharsets.UTF_8), TRUNCATE_EXISTING);
+        System.out.println("Got a new image, processed it successfully");
+      } else {
+        System.out.println("\n\n\nTesseract failed to create h1.txt. Why???\n\n\n");
+        Thread.sleep(1_200);
+        continue;
+      }
+      Thread.sleep(1000);
+    }
   }
 }
