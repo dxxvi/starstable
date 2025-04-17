@@ -13,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -124,7 +123,7 @@ class ActionRunnerTest {
         .run();
   }
 
-//  @Test
+  //  @Test
   void test() throws Throwable {
     long fileSize = -1;
 
@@ -154,10 +153,11 @@ class ActionRunnerTest {
       file = new File("/dev/shm/h1.txt");
       if (file.exists()) {
         String everything = Files.readString(file.toPath(), StandardCharsets.UTF_8);
-        everything = everything
-            .replaceAll("\\r\\n", "\n")
-            .replaceAll("\\n+", "\n")
-            .replaceAll("\\n. ", "\n- ");
+        everything =
+            everything
+                .replaceAll("\\r\\n", "\n")
+                .replaceAll("\\n+", "\n")
+                .replaceAll("\\n. ", "\n- ");
         Files.write(file.toPath(), everything.getBytes(StandardCharsets.UTF_8), TRUNCATE_EXISTING);
         System.out.println("Got a new image, processed it successfully");
       } else {

@@ -64,6 +64,39 @@ public class ActionRunner implements Runnable {
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
       }
 
+      if (action.drag() != null) {
+        var drag = action.drag();
+        robot.mouseMove(drag.x1(), drag.y1());
+        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        robot.delay(300);
+        int stepX = drag.x2() > drag.x1() ? 20 : -20;
+        int stepY = drag.y2() > drag.y1() ? 20 : -20;
+        int x = drag.x1();
+        int y = drag.y1();
+        while (x != drag.x2() && y != drag.y2()) {
+          int newX = x + stepX;
+          if (stepX > 0 && newX > drag.x2()) {
+            newX = drag.x2();
+          }
+          if (stepX < 0 && newX < drag.x2()) {
+            newX = drag.x2();
+          }
+          x = newX;
+          int newY = y + stepY;
+          if (stepY > 0 && newY > drag.y2()) {
+            newY = drag.y2();
+          }
+          if (stepY < 0 && newY < drag.y2()) {
+            newY = drag.y2();
+          }
+          y = newY;
+          robot.mouseMove(x, y);
+          robot.delay(19);
+        }
+        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        robot.delay(900);
+      }
+
       Thread.sleep(action.msSleep() == null ? 500 : action.msSleep());
 
       if (action.subactions() != null) {
