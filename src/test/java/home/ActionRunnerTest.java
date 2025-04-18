@@ -23,7 +23,7 @@ class ActionRunnerTest {
   @Test
   void testRun() throws AWTException {
     JsonNode jsonNode =
-        OBJECT_MAPPER.valueToTree(new Action(null, 5, 6, "C", null, null, null, null));
+        OBJECT_MAPPER.valueToTree(new Action(null, 5, 6, "C", null, null, null, null, null));
 
     var robot =
         new Robot() {
@@ -111,11 +111,13 @@ class ActionRunnerTest {
             List.of(
                 new Action(
                     Map.ofEntries(
-                        entry("action1", new Action(null, 3, 4, "B", false, 51L, null, null))),
+                        entry(
+                            "action1", new Action(null, 3, 4, "B", false, null, 51L, null, null))),
                     1,
                     2,
                     "A",
                     true,
+                    null,
                     50L,
                     List.of(new TextNode("action1"), jsonNode),
                     2)),
@@ -167,5 +169,13 @@ class ActionRunnerTest {
       }
       Thread.sleep(1000);
     }
+  }
+
+  @Test
+  void tradingView() throws Exception {
+    var url =
+        "https://raw.githubusercontent.com/dxxvi/node-express-example/refs/heads/tradingview/TSLL.csv";
+    int N = 100; // the last N lines to read
+    // we need lowest today vs close yesterday, highest today vs close yesterday
   }
 }
