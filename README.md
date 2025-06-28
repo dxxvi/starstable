@@ -6,7 +6,11 @@ A series is a column in a data frame and has an index. What we can do with a ser
       - unsigned integers: `np.uint8`, `np.uint16`, `np.uint32` and `np.uint64`
       - floats: NaN is also a float, e.g `np.float16`, ..., `np.float64`
       - Python object: `object`
-  - change index
+  - change index (the index values don't need to be unique)
   - create a slice
   - sort
-  - find min, max, average, top/bottom n ... of the values and the indices of those values
+  - find count/length, min, max, average, top/bottom n, percentile ... of the values and the indices of those values
+  - create another series (filter, map)
+
+# Data Frames
+
