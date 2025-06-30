@@ -29,9 +29,7 @@ class TopBiggestUSCitiesTest {
           cities.add(
               new City(
                   a.text(), stateElement.text(), Integer.parseInt(nextTd.text().replace(",", ""))));
-        } catch (NumberFormatException _) {
-          /* who cares */
-        }
+        } catch (NumberFormatException _) { /* who cares */ }
       }
 
       path = null;
@@ -40,9 +38,7 @@ class TopBiggestUSCitiesTest {
           int next = Integer.parseInt(a.attr("href").substring(1));
           path = "/" + next;
           break;
-        } catch (NumberFormatException _) {
-          /* who cares */
-        }
+        } catch (NumberFormatException _) { /* who cares */ }
       }
     }
 
